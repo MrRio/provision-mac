@@ -5,7 +5,7 @@
 brew tap caskroom/cask
 brew cask install atom google-chrome slack
 brew cask install hipchat sublime-text phpstorm firefox sequel-pro iterm2 hyper
-brew cask install virtualbox github-desktop paw
+brew cask install virtualbox github-desktop paw ksdiff
 
 # Install App Store Apps
 brew install mas

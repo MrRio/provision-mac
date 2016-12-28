@@ -80,10 +80,14 @@ brew install yarn
 # Parallax backgrounds
 # TODO
 
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 # Copy configs
 # Hyper
 cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
-cp ~/Code/provision-mac/configs/.hyper.js ~/.hyper.js
+cp ./configs/.hyper.js ~/.hyper.js
+cp ./configs/.zshrc ~/.zshrc
 
 # Composer
 curl -sS https://getcomposer.org/installer | php

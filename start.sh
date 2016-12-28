@@ -107,8 +107,7 @@ valet park
 
 # Install Laravel installer
 composer global require "laravel/installer"
-
-laravel new example
+composer create-project laravel/laravel example
 cd example
 valet secure
 valet open

@@ -104,7 +104,10 @@ mkdir ~/Code
 cd ~/Code
 valet park
 
-~/.composer/vendor/laravel/installer/laravel new example
+# Install Laravel installer
+composer global require "laravel/installer"
+
+laravel new example
 cd example
 valet secure
 valet open

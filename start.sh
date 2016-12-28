@@ -1,24 +1,96 @@
-echo "WARNING: This disables sudo timeout for unassisted install"
-echo "It reenables at the end, so make sure you run it all the way through"
+# Get Sudo.
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
+fi
 
-# Disable sudo timeout
-sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
+# Setup Git.
+read -e -p "Enter your git username: " USERNAME
+read -e -p "Enter your git email address: " EMAIL
+git config --global user.name $USERNAME
+git config --global user.email $EMAIL
+ssh-keygen -t rsa -b 4096 -C $EMAIL
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+pbcopy < ~/.ssh/id_rsa.pub
+
+# App Store
+echo "If you get this wrong you'll need to rerun the script"
+read -e -p "Enter your App Store email: " APP_STORE_EMAIL
+read -e -p "Enter your App Store password: " APP_STORE_PASSWORD
 
 # Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+# Authenticate App Store
+brew install mas
+mas signin $APP_STORE_EMAIL $APP_STORE_PASSWORD
+
 # Install Cask and GUI apps
 brew tap caskroom/cask
-brew cask install atom google-chrome slack
-brew cask install hipchat sublime-text phpstorm firefox sequel-pro iterm2 hyper
-brew cask install virtualbox github-desktop paw ksdiff spotify
+
+# Editors
+brew cask install atom
+brew cask install sublime-text3
+brew cask install phpstorm
+
+# Terminals
+brew cask install iterm2
+brew cask install hyper
+
+# Browsers
+brew cask install google-chrome
+brew cask install firefox
+
+# Chat
+brew cask install hipchat
+brew cask install slack
+brew cask install skype
+
+# Dev apps
+brew cask install sequel-pro
+brew cask install virtualbox
+brew cask install github-desktop
+brew cask install paw
+brew cask install ksdiff
+brew cask install genymotion
+brew cask install sourcetree
+
+# Music
+brew cask install spotify
+
+# Adobe Stuff
+brew cask install adobe-photoshop-cc
+brew cask install adobe-illustrator-cc
+
+# Sketch
+brew cask install sketch
+brew cask install invisionsync
 
 # Fluid App (for making web apps into apps)
 brew cask install fluid
 
-# Install App Store Apps
-brew install mas
-mas signin `cat appstore-creds`
+# Nicer plugins for QuickLook.
+brew cask install qlcolorcode
+brew cask install qlstephen
+brew cask install qlmarkdown
+brew cask install quicklook-json
+brew cask install webpquicklook
+brew cask install qlimagesize
+
+# System stuff
+brew install vim
+brew install coreutils
+brew install bash
+brew install git
+brew install nano
+brew install vim
+brew install openssh
+brew install java
+brew install python
+curl -L https://get.rvm.io | bash -s stable --ruby
+
+# Install App Store apps
 
 # 1Password
 mas install 443987910
@@ -145,8 +217,10 @@ atom setup.md
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Open Hyper.app
-open -b co.zeit.hyper --args "cd ~/Code/example"
+echo "-------------------------------------"
+echo "Your Git key is ready to be pasted!"
+echo "Enjoy your new system!"
+echo "-------------------------------------"
 
-# Reenable sudo
-sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers
+# Open Hyper.app
+open -b co.zeit.hyper

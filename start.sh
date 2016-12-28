@@ -112,9 +112,9 @@ apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
 
 echo "{
-    title: "Example"
+    title: \"Example\"
     paths: [
-        "/Users/jameshall/Code/example"
+        \"/Users/jameshall/Code/example\"
     ]
     devMode: true
 }" > project.cson
@@ -124,3 +124,8 @@ echo "To use PHP Integrator, go to Packages > Project Manager > Save Project
 Then go to Packages > PHP Integrator > Set Up Current Project
 " > setup.md
 atom setup.md
+
+# Open Hyper.app
+cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
+cp ./configs/.hyper.js ~/.hyper.js
+open -b co.zeit.hyper --args "cd ~/Code/example"

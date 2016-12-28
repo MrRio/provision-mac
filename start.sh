@@ -80,9 +80,6 @@ brew install yarn
 # Parallax backgrounds
 # TODO
 
-# Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
 # Copy configs
 # Hyper
 cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
@@ -134,6 +131,9 @@ echo "To use PHP Integrator, go to Packages > Project Manager > Save Project
 Then go to Packages > PHP Integrator > Set Up Current Project
 " > setup.md
 atom setup.md
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Open Hyper.app
 open -b co.zeit.hyper --args "cd ~/Code/example"

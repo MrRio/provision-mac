@@ -91,6 +91,7 @@ curl -sS https://getcomposer.org/installer | php
 
 mkdir -p ~/.bin
 mv composer.phar ~/.bin/composer
+export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
 
 # Install valet and configure that
 composer global require laravel/valet

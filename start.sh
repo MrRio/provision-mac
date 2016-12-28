@@ -74,10 +74,16 @@ brew services start mysql
 brew install node
 
 # Yarn
-npm install yarn -g
+brew install yarn
+#npm install yarn -g
 
 # Parallax backgrounds
 # TODO
+
+# Copy configs
+# Hyper
+cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
+cp ~/Code/provision-mac/configs/.hyper.js ~/.hyper.js
 
 # Composer
 curl -sS https://getcomposer.org/installer | php
@@ -114,7 +120,7 @@ apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
 echo "{
     title: \"Example\"
     paths: [
-        \"/Users/jameshall/Code/example\"
+        \"/Users/`whoami`/Code/example\"
     ]
     devMode: true
 }" > project.cson
@@ -126,6 +132,4 @@ Then go to Packages > PHP Integrator > Set Up Current Project
 atom setup.md
 
 # Open Hyper.app
-cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
-cp ./configs/.hyper.js ~/.hyper.js
 open -b co.zeit.hyper --args "cd ~/Code/example"

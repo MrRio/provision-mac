@@ -100,14 +100,6 @@ valet park
 cd example
 valet secure
 valet open
-echo "{
-    title: "Example"
-    paths: [
-        "/Users/jameshall/Code/example"
-    ]
-    devMode: true
-}" > project.cson
-atom .
 
 apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     docblockr editorconfig hyperclick intentions language-blade \
@@ -118,3 +110,17 @@ apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     php-integrator-navigation php-integrator-refactoring \
     php-integrator-tooltips project-manager seti-ui \
     standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
+
+echo "{
+    title: "Example"
+    paths: [
+        "/Users/jameshall/Code/example"
+    ]
+    devMode: true
+}" > project.cson
+atom .
+echo "To use PHP Integrator, go to Packages > Project Manager > Save Project
+
+Then go to Packages > PHP Integrator > Set Up Current Project
+" > setup.md
+atom setup.md

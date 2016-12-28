@@ -45,9 +45,30 @@ mas install 403388562
 # Xcode
 mas install 497799835
 
-# Install PHP71
+## Google Chrome extensions
+mkdir -p ~/Library/Application\ Support/Google/Chrome/External\ Extensions
+install_chrome_extension() {
+    echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' > ~/Library/Application\ Support/Google/Chrome/External\ Extensions/$1.json
+}
+# 1Password
+install_chrome_extension 'aomjjhallfgjeglblehebfpbcfeobpgk'
+# Capture for JIRA
+install_chrome_extension 'mmmjimhmoodbiejkjgcecaoibmochpnj'
+# Browserstack
+install_chrome_extension 'nkihdmlheodkdfojglpcjjmioefjahjb'
+# Clockwork
+install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
+# Hubspot
+install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
+# Vue.js devtools
+install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
+
+# Install PHP71 and MySQL
 brew tap homebrew/php
 brew install homebrew/php/php71 homebrew/php/php71-mcrypt mysql
+
+# Start MySQL on boot
+brew services start mysql
 
 # Install node
 brew install node
@@ -58,18 +79,35 @@ npm install yarn -g
 # Parallax backgrounds
 # TODO
 
-# Setup code directories
-mkdir ~/Code
-cd ~/Code
-
 # Composer
 curl -sS https://getcomposer.org/installer | php
+
+mkdir -p ~/.bin
 mv composer.phar ~/.bin/composer
 
 # Install valet and configure that
+composer global require laravel/valet
 
-# TODO: Add valet here
+valet install
+
+# Add valet to ~/Code
+# Setup code directories
+mkdir ~/Code
+cd ~/Code
 valet park
+
+~/.composer/vendor/laravel/installer/laravel new example
+cd example
+valet secure
+valet open
+echo "{
+    title: "Example"
+    paths: [
+        "/Users/jameshall/Code/example"
+    ]
+    devMode: true
+}" > project.cson
+atom .
 
 apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     docblockr editorconfig hyperclick intentions language-blade \

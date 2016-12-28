@@ -1,3 +1,9 @@
+echo "WARNING: This disables sudo timeout for unassisted install"
+echo "It reenables at the end, so make sure you run it all the way through"
+
+# Disable sudo timeout
+sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
+
 # Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -91,7 +97,6 @@ curl -sS https://getcomposer.org/installer | php
 
 mkdir -p ~/.bin
 mv composer.phar /usr/local/bin/composer
-chmod +x ~/.bin/composer
 export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
 
 # Install valet and configure that
@@ -130,7 +135,8 @@ echo "{
     devMode: true
 }" > project.cson
 atom .
-echo "To use PHP Integrator, go to Packages > Project Manager > Save Project
+echo "To use PHP Integrator, go to Packages > Project Manager > Save Project and
+enable dev mode.
 
 Then go to Packages > PHP Integrator > Set Up Current Project
 " > setup.md
@@ -141,3 +147,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 # Open Hyper.app
 open -b co.zeit.hyper --args "cd ~/Code/example"
+
+# Reenable sudo
+sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers

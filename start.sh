@@ -4,6 +4,9 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
+# Install Xcode command line tools.
+xcode-select --install
+
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME
 read -e -p "Enter your git email address: " EMAIL

@@ -1,12 +1,19 @@
+#!/bin/bash
 # Install Xcode command line tools.
+sudo -K
+sudo echo "Welcome"
+
+read -p "Install optional apps (y/n)? " choice
+case "$choice" in
+  y|Y ) apps=1;;
+  n|N ) apps=0;;
+  * ) echo "Assuming no"; apps=0;
+esac
+
 xcode-select --install
 
-# Temp fix for perms issue
-# This needs to not be world writeable
-mkdir ~/.composer
-mkdir ~/Code
-chmod 0777 ~/.composer
-chmod 0777 ~/Code
+mkdir -p ~/.composer
+mkdir -p ~/Code
 
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME
@@ -86,20 +93,55 @@ valet open
 brew tap caskroom/cask
 
 # Editors
-brew cask install atom
-brew cask install sublime-text
-brew cask install phpstorm
+if [ ! -d /Applications/Atom.app ]; then
+    brew cask install atom
+fi
+if [ ! -d /Applications/Sublime\ Text.app ]; then
+    brew cask install sublime-text
+fi
+if [ ! -d /Applications/PhpStorm.app ]; then
+    brew cask install phpstorm
+fi
 
-# Install atom deps
-apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
-    docblockr editorconfig hyperclick intentions language-blade \
-    language-powershell linter linter-js-standard linter-php linter-phpcs \
-    minimap nucleus-dark-ui php-cs-fixer \
-    php-integrator-annotations php-integrator-autocomplete-plus \
-    php-integrator-base php-integrator-call-tips php-integrator-linter \
-    php-integrator-navigation php-integrator-refactoring \
-    php-integrator-tooltips project-manager seti-ui \
-    standard-formatter standardjs-snippets unity-dark-ui unity-ui
+# Install atom deps, but only if they're not installed already
+installed=`apm ls`
+apmi() {
+    package=" $1@"
+    if ! grep -q $package <<< $installed; then
+      apm install $1
+    fi
+}
+
+apmi atom-ternjs
+apmi base16-tomorrow-night-eighties-syntax
+apmi count-word
+apmi docblockr
+apmi editorconfig
+apmi hyperclick
+apmi intentions
+apmi language-blade
+apmi language-powershell
+apmi linter
+apmi linter-js-standard
+apmi linter-php
+apmi linter-phpcs
+apmi minimap
+apmi nucleus-dark-ui
+apmi php-cs-fixer
+apmi php-integrator-annotations
+apmi php-integrator-autocomplete-plus
+apmi php-integrator-base
+apmi php-integrator-call-tips
+apmi php-integrator-linter
+apmi php-integrator-navigation
+apmi php-integrator-refactoring
+apmi php-integrator-tooltips
+apmi project-manager
+apmi seti-ui
+apmi standard-formatter
+apmi standardjs-snippets
+apmi unity-dark-ui
+apmi unity-ui
 
 # TODO Potentially controversial and doesn't work in VM, also needs CSS hack
 apm install no-title-bar
@@ -124,111 +166,147 @@ Then go to Packages > PHP Integrator > Set Up Current Project
 atom setup.md
 
 # Terminals
-brew cask install iterm2
-brew cask install hyper
+if [ ! -d /Applications/iTerm.app ]; then
+    brew cask install iterm2;
+fi
+
+if [ ! -d /Applications/Hyper.app ]; then
+    brew cask install hyper
+fi
 
 # Browsers
-brew cask install google-chrome
-brew cask install firefox
+if [ ! -d /Applications/Google\ Chrome.app ]; then
+    brew cask install google-chrome
+fi
 
-# Chat
-brew cask install hipchat
-brew cask install slack
-brew cask install skype
+if [ $apps == 1 ]; then
+    if [ ! -d /Applications/Firefox.app ]; then
+        brew cask install firefox
+    fi
 
-# Dev apps
-brew cask install sequel-pro
-brew cask install virtualbox
-brew cask install github-desktop
-brew cask install paw
-brew cask install ksdiff
-brew cask install genymotion
-brew cask install sourcetree
+    # Chat
+    if [ ! -d /Applications/HipChat.app ]; then
+        brew cask install hipchat
+    fi
+    if [ ! -d /Applications/Slack.app ]; then
+        brew cask install slack
+    fi
+    if [ ! -d /Applications/Skype.app ]; then
+        brew cask install skype
+    fi
 
-# Music
-brew cask install spotify
+    # Dev apps
+    if [ ! -d /Applications/Sequel\ Pro.app ]; then
+        brew cask install sequel-pro
+    fi
+    if [ ! -d /Applications/VirtualBox.app ]; then
+        brew cask install virtualbox
+    fi
+    if [ ! -d /Applications/GitHub\ Desktop.app ]; then
+        brew cask install github-desktop
+    fi
+    if [ ! -d /Applications/Paw.app ]; then
+        brew cask install paw
+    fi
+    brew cask install ksdiff
+    if [ ! -d /Applications/Genymotion.app ]; then
+        brew cask install genymotion
+    fi
+    if [ ! -d /Applications/SourceTree.app ]; then
+        brew cask install sourcetree
+    fi
+    # Music
+    if [ ! -d /Applications/Spotify.app ]; then
+        brew cask install spotify
+    fi
 
-# Adobe Stuff
-brew cask install adobe-photoshop-cc
-brew cask install adobe-illustrator-cc
+    # Adobe Stuff
+    if [ ! -d /Applications/Adobe\ Photoshop\ CC\ 2015 ]; then
+        brew cask install adobe-photoshop-cc
+    fi
+    if [ ! -d /Applications/Adobe\ Illustrator\ CC\ 2015 ]; then
+        brew cask install adobe-illustrator-cc
+    fi
 
-# Sketch
-brew cask install sketch
-brew cask install invisionsync
+    # Sketch
+    if [ ! -d /Applications/Sketch.app ]; then
+        brew cask install sketch
+    fi
+    if [ ! -d /Applications/InVisionSync.app ]; then
+        brew cask install invisionsync
+    fi
 
-# Fluid App (for making web apps into apps)
-brew cask install fluid
+    # Nicer plugins for QuickLook.
+    brew cask install qlcolorcode
+    brew cask install qlstephen
+    brew cask install qlmarkdown
+    brew cask install quicklook-json
+    brew cask install webpquicklook
+    brew cask install qlimagesize
 
-# Nicer plugins for QuickLook.
-brew cask install qlcolorcode
-brew cask install qlstephen
-brew cask install qlmarkdown
-brew cask install quicklook-json
-brew cask install webpquicklook
-brew cask install qlimagesize
+    # System stuff
+    brew install vim
+    brew install coreutils
+    brew install bash
+    brew install git
+    brew install nano
+    brew install vim
+    brew install openssh
+    brew install java
+    brew install python
+    curl -L https://get.rvm.io | bash -s stable --ruby
 
-# System stuff
-brew install vim
-brew install coreutils
-brew install bash
-brew install git
-brew install nano
-brew install vim
-brew install openssh
-brew install java
-brew install python
-curl -L https://get.rvm.io | bash -s stable --ruby
+    # Install App Store apps
 
-# Install App Store apps
+    # 1Password
+    mas install 443987910
+    # BetterSnapTool
+    mas install 417375580
+    # Boxy
+    mas install 1053031090
+    # Daisydisk
+    mas install 411643860
+    # Integrity
+    mas install 513610341
+    # Kaleidoscope
+    mas install 587512244
+    # Keynote
+    mas install 409183694
+    # Name Mangler
+    mas install 603637384
+    # Numbers
+    mas install 409203825
+    # Pages
+    mas install 409201541
+    # Patterns
+    mas install 429449079
+    # Sip
+    mas install 507257563
+    # Soulver
+    mas install 413965349
+    # Transmit
+    mas install 403388562
+    # Xcode
+    mas install 497799835
 
-# 1Password
-mas install 443987910
-# BetterSnapTool
-mas install 417375580
-# Boxy
-mas install 1053031090
-# Daisydisk
-mas install 411643860
-# Integrity
-mas install 513610341
-# Kaleidoscope
-mas install 587512244
-# Keynote
-mas install 409183694
-# Name Mangler
-mas install 603637384
-# Numbers
-mas install 409203825
-# Pages
-mas install 409201541
-# Patterns
-mas install 429449079
-# Sip
-mas install 507257563
-# Soulver
-mas install 413965349
-# Transmit
-mas install 403388562
-# Xcode
-mas install 497799835
-
-## Google Chrome extensions
-mkdir -p ~/Library/Application\ Support/Google/Chrome/External\ Extensions
-install_chrome_extension() {
-    echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' > ~/Library/Application\ Support/Google/Chrome/External\ Extensions/$1.json
-}
-# 1Password
-install_chrome_extension 'aomjjhallfgjeglblehebfpbcfeobpgk'
-# Capture for JIRA
-install_chrome_extension 'mmmjimhmoodbiejkjgcecaoibmochpnj'
-# Browserstack
-install_chrome_extension 'nkihdmlheodkdfojglpcjjmioefjahjb'
-# Clockwork
-install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
-# Hubspot
-install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
-# Vue.js devtools
-install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
+    ## Google Chrome extensions
+    mkdir -p ~/Library/Application\ Support/Google/Chrome/External\ Extensions
+    install_chrome_extension() {
+        echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' > ~/Library/Application\ Support/Google/Chrome/External\ Extensions/$1.json
+    }
+    # 1Password
+    install_chrome_extension 'aomjjhallfgjeglblehebfpbcfeobpgk'
+    # Capture for JIRA
+    install_chrome_extension 'mmmjimhmoodbiejkjgcecaoibmochpnj'
+    # Browserstack
+    install_chrome_extension 'nkihdmlheodkdfojglpcjjmioefjahjb'
+    # Clockwork
+    install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
+    # Hubspot
+    install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
+    # Vue.js devtools
+    install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
+fi
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -240,3 +318,4 @@ echo "-------------------------------------"
 
 # Open Hyper.app
 open -b co.zeit.hyper
+sudo -k

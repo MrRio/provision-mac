@@ -3,6 +3,7 @@
 * Standard node tools (n for switching, gulp etc), bower
 * Sublime Plugins
 * Font with nice line height
+* Set global non-zsh PATH
 * Atom config and styles
     * Update line height in less file
     * Ensure phpcs path is set

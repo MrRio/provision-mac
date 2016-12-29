@@ -99,7 +99,7 @@ apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     php-integrator-base php-integrator-call-tips php-integrator-linter \
     php-integrator-navigation php-integrator-refactoring \
     php-integrator-tooltips project-manager seti-ui \
-    standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
+    standard-formatter standardjs-snippets unity-dark-ui unity-ui
 
 # TODO Potentially controversial and doesn't work in VM, also needs CSS hack
 apm install no-title-bar

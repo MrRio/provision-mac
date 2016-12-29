@@ -3,10 +3,10 @@ xcode-select --install
 
 # Temp fix for perms issue
 # This needs to not be world writeable
-sudo mkdir ~/.composer
-sudo mkdir ~/Code
-sudo chmod 0777 ~/.composer
-sudo chown 0777 ~/Code
+mkdir ~/.composer
+mkdir ~/Code
+chmod 0777 ~/.composer
+chown 0777 ~/Code
 
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME

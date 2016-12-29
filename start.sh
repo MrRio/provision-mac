@@ -1,8 +1,8 @@
-# Get Sudo.
-if [ $EUID != 0 ]; then
-    sudo "$0" "$@"
-    exit $?
-fi
+
+echo "WARNING: This disables sudo timeout for unassisted install"
+echo "It reenables at the end, so make sure you run it all the way through"
+
+sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
 
 # Install Xcode command line tools.
 xcode-select --install
@@ -28,6 +28,83 @@ read -e -p "Enter your App Store password: " APP_STORE_PASSWORD
 # Authenticate App Store
 brew install mas
 mas signin $APP_STORE_EMAIL $APP_STORE_PASSWORD
+
+# Install PHP71 and MySQL
+brew tap homebrew/php
+brew install homebrew/php/php71 homebrew/php/php71-mcrypt mysql
+
+# Start MySQL on boot
+brew services start mysql
+
+# Install node
+brew install node
+
+# Yarn
+brew install yarn
+#npm install yarn -g
+
+# Parallax backgrounds
+# TODO
+
+# Copy configs
+# Hyper
+cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
+cp ./configs/.hyper.js ~/.hyper.js
+cp ./configs/.zshrc ~/.zshrc
+
+# Composer
+curl -sS https://getcomposer.org/installer | php
+
+mkdir -p ~/.bin
+mv composer.phar /usr/local/bin/composer
+export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
+
+# Install valet and configure that
+composer global require laravel/valet
+
+valet install
+
+# Add valet to ~/Code
+# Setup code directories
+mkdir ~/Code
+cd ~/Code
+valet park
+
+# Install Laravel installer
+composer global require "laravel/installer"
+composer create-project laravel/laravel example
+cd example
+valet secure
+valet open
+
+apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
+    docblockr editorconfig hyperclick intentions language-blade \
+    language-powershell linter linter-js-standard linter-php linter-phpcs \
+    minimap no-title-bar nucleus-dark-ui php-cs-fixer \
+    php-integrator-annotations php-integrator-autocomplete-plus \
+    php-integrator-base php-integrator-call-tips php-integrator-linter \
+    php-integrator-navigation php-integrator-refactoring \
+    php-integrator-tooltips project-manager seti-ui \
+    standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
+
+echo "{
+    title: \"Example\"
+    paths: [
+        \"/Users/`whoami`/Code/example\"
+    ]
+    devMode: true
+}" > project.cson
+atom .
+echo "To use PHP Integrator, go to Packages > Project Manager > Save Project and
+enable dev mode.
+
+Then go to Packages > PHP Integrator > Set Up Current Project
+" > setup.md
+atom setup.md
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 
 # Install Cask and GUI apps
 brew tap caskroom/cask
@@ -143,82 +220,6 @@ install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
 install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
 # Vue.js devtools
 install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
-
-# Install PHP71 and MySQL
-brew tap homebrew/php
-brew install homebrew/php/php71 homebrew/php/php71-mcrypt mysql
-
-# Start MySQL on boot
-brew services start mysql
-
-# Install node
-brew install node
-
-# Yarn
-brew install yarn
-#npm install yarn -g
-
-# Parallax backgrounds
-# TODO
-
-# Copy configs
-# Hyper
-cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
-cp ./configs/.hyper.js ~/.hyper.js
-cp ./configs/.zshrc ~/.zshrc
-
-# Composer
-curl -sS https://getcomposer.org/installer | php
-
-mkdir -p ~/.bin
-mv composer.phar /usr/local/bin/composer
-export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
-
-# Install valet and configure that
-composer global require laravel/valet
-
-valet install
-
-# Add valet to ~/Code
-# Setup code directories
-mkdir ~/Code
-cd ~/Code
-valet park
-
-# Install Laravel installer
-composer global require "laravel/installer"
-composer create-project laravel/laravel example
-cd example
-valet secure
-valet open
-
-apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
-    docblockr editorconfig hyperclick intentions language-blade \
-    language-powershell linter linter-js-standard linter-php linter-phpcs \
-    minimap no-title-bar nucleus-dark-ui php-cs-fixer \
-    php-integrator-annotations php-integrator-autocomplete-plus \
-    php-integrator-base php-integrator-call-tips php-integrator-linter \
-    php-integrator-navigation php-integrator-refactoring \
-    php-integrator-tooltips project-manager seti-ui \
-    standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
-
-echo "{
-    title: \"Example\"
-    paths: [
-        \"/Users/`whoami`/Code/example\"
-    ]
-    devMode: true
-}" > project.cson
-atom .
-echo "To use PHP Integrator, go to Packages > Project Manager > Save Project and
-enable dev mode.
-
-Then go to Packages > PHP Integrator > Set Up Current Project
-" > setup.md
-atom setup.md
-
-# Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "-------------------------------------"
 echo "Your Git key is ready to be pasted!"

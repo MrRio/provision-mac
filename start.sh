@@ -1,9 +1,3 @@
-
-echo "WARNING: This disables sudo timeout for unassisted install"
-echo "It reenables at the end, so make sure you run it all the way through"
-
-sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
-
 # Install Xcode command line tools.
 xcode-select --install
 

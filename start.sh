@@ -1,9 +1,12 @@
 # Install Xcode command line tools.
 xcode-select --install
 
-# Get perms issue sorted
+# Temp fix for perms issue
+# This needs to not be world writeable
 sudo mkdir ~/.composer
-sudo chown `whoami` ~/.composer
+sudo mkdir ~/Code
+sudo chmod 0777 ~/.composer
+sudo chown 0777 ~/Code
 
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME
@@ -76,6 +79,15 @@ cd example
 valet secure
 valet open
 
+# Install Cask and GUI apps
+brew tap caskroom/cask
+
+# Editors
+brew cask install atom
+brew cask install sublime-text3
+brew cask install phpstorm
+
+# Install atom deps
 apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     docblockr editorconfig hyperclick intentions language-blade \
     language-powershell linter linter-js-standard linter-php linter-phpcs \
@@ -100,18 +112,6 @@ enable dev mode.
 Then go to Packages > PHP Integrator > Set Up Current Project
 " > setup.md
 atom setup.md
-
-# Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-
-# Install Cask and GUI apps
-brew tap caskroom/cask
-
-# Editors
-brew cask install atom
-brew cask install sublime-text3
-brew cask install phpstorm
 
 # Terminals
 brew cask install iterm2
@@ -219,6 +219,9 @@ install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
 install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
 # Vue.js devtools
 install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "-------------------------------------"
 echo "Your Git key is ready to be pasted!"

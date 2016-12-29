@@ -1,6 +1,10 @@
 # Install Xcode command line tools.
 xcode-select --install
 
+# Get perms issue sorted
+sudo mkdir ~/.composer
+sudo chown `whoami` ~/.composer
+
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME
 read -e -p "Enter your git email address: " EMAIL
@@ -49,10 +53,9 @@ cp ./configs/.hyper.js ~/.hyper.js
 cp ./configs/.zshrc ~/.zshrc
 
 # Composer
-curl -sS https://getcomposer.org/installer | php
-
+brew install composer
 mkdir -p ~/.bin
-mv composer.phar /usr/local/bin/composer
+
 export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
 
 # Install valet and configure that

@@ -6,7 +6,7 @@ xcode-select --install
 mkdir ~/.composer
 mkdir ~/Code
 chmod 0777 ~/.composer
-chown 0777 ~/Code
+chmod 0777 ~/Code
 
 # Setup Git.
 read -e -p "Enter your git username: " USERNAME
@@ -84,19 +84,22 @@ brew tap caskroom/cask
 
 # Editors
 brew cask install atom
-brew cask install sublime-text3
+brew cask install sublime-text
 brew cask install phpstorm
 
 # Install atom deps
 apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
     docblockr editorconfig hyperclick intentions language-blade \
     language-powershell linter linter-js-standard linter-php linter-phpcs \
-    minimap no-title-bar nucleus-dark-ui php-cs-fixer \
+    minimap nucleus-dark-ui php-cs-fixer \
     php-integrator-annotations php-integrator-autocomplete-plus \
     php-integrator-base php-integrator-call-tips php-integrator-linter \
     php-integrator-navigation php-integrator-refactoring \
     php-integrator-tooltips project-manager seti-ui \
     standard-formatter standardjs-snippets sync-settings unity-dark-ui unity-ui
+
+# TODO Potentially controversial and doesn't work in VM, also needs CSS hack
+apm install no-title-bar
 
 echo "{
     title: \"Example\"

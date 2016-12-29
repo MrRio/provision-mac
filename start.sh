@@ -63,6 +63,9 @@ export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
 
 # Install valet and configure that
 composer global require laravel/valet
+composer global require "phpunit/phpunit=5.5.*"
+composer global require "squizlabs/php_codesniffer=*"
+composer global require friendsofphp/php-cs-fixer
 
 valet install
 
@@ -100,6 +103,10 @@ apm install atom-ternjs base16-tomorrow-night-eighties-syntax count-word \
 
 # TODO Potentially controversial and doesn't work in VM, also needs CSS hack
 apm install no-title-bar
+
+# Fonts
+brew tap caskroom/fonts
+brew cask install font-meslo-lg-for-powerline
 
 echo "{
     title: \"Example\"

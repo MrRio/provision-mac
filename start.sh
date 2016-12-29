@@ -19,6 +19,8 @@ read -e -p "Enter your App Store password: " APP_STORE_PASSWORD
 # Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+read -e -p "Press enter to continue"
+
 # Authenticate App Store
 brew install mas
 mas signin $APP_STORE_EMAIL $APP_STORE_PASSWORD

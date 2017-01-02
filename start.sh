@@ -144,7 +144,7 @@ apmi unity-dark-ui
 apmi unity-ui
 
 # TODO Potentially controversial and doesn't work in VM, also needs CSS hack
-apm install no-title-bar
+# apm install no-title-bar
 
 # Fonts
 brew tap caskroom/fonts

@@ -60,7 +60,6 @@ brew install yarn
 # Hyper
 cp ~/.hyper.js ~/.hyper.backup-`date +%Y-%m-%d-%H-%M-%S`.js
 cp ./configs/.hyper.js ~/.hyper.js
-cp ./configs/.zshrc ~/.zshrc
 
 # Composer
 brew install composer
@@ -121,6 +120,7 @@ apmi hyperclick
 apmi intentions
 apmi language-blade
 apmi language-powershell
+apmi language-protobuf
 apmi linter
 apmi linter-js-standard
 apmi linter-php
@@ -254,7 +254,11 @@ if [ $apps == 1 ]; then
     brew install openssh
     brew install java
     brew install python
-    curl -L https://get.rvm.io | bash -s stable --ruby
+
+    # Install Ruby
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    \curl -sSL https://get.rvm.io | bash -s stable
+    rvm install ruby-head
 
     # Install App Store apps
 
@@ -318,4 +322,8 @@ echo "-------------------------------------"
 
 # Open Hyper.app
 open -b co.zeit.hyper
+
+# Copy zsh config
+cp ./configs/.zshrc ~/.zshrc
+
 sudo -k

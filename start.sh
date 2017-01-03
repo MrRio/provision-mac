@@ -306,6 +306,8 @@ if [ $apps == 1 ]; then
     install_chrome_extension 'nkihdmlheodkdfojglpcjjmioefjahjb'
     # Clockwork
     install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
+    # Harvest time tracker
+    install_chrome_extension 'fbpiglieekigmkeebmeohkelfpjjlaia'
     # Hubspot
     install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
     # Vue.js devtools

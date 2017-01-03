@@ -10,7 +10,7 @@ ZSH_THEME_TERM_TITLE_IDLE=%~
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='atom'
+  export EDITOR='atom --wait'
 fi
 
 # Example aliases

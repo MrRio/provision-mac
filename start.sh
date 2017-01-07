@@ -268,8 +268,10 @@ if [ $apps == 1 ]; then
     mas install 417375580
     # Boxy
     mas install 1053031090
-    # Daisydisk
+    # Daisydisk - disk usage visualiser
     mas install 411643860
+    # Harvest - Time tracking
+    mas install 506189836
     # Integrity
     mas install 513610341
     # Kaleidoscope

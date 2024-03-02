@@ -15,23 +15,13 @@ xcode-select --install
 mkdir -p ~/.composer
 mkdir -p ~/Code
 
-# Setup Git.
-read -e -p "Enter your git username: " USERNAME
-read -e -p "Enter your git email address: " EMAIL
-git config --global user.name $USERNAME
-git config --global user.email $EMAIL
-ssh-keygen -t rsa -b 4096 -C $EMAIL
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-pbcopy < ~/.ssh/id_rsa.pub
-
 # App Store
 echo "If you get this wrong you'll need to rerun the script"
 read -e -p "Enter your App Store email: " APP_STORE_EMAIL
 read -e -p "Enter your App Store password: " APP_STORE_PASSWORD
 
 # Install homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 read -e -p "Press enter to continue"
 
@@ -86,10 +76,10 @@ brew tap caskroom/cask
 # Editors
 
 if [ ! -d /Applications/Sublime\ Text.app ]; then
-    brew cask install sublime-text
+    brew install sublime-text
 fi
 if [ ! -d /Applications/Visual\ Studio\ Code.app ]; then
-    brew cask install visual-studio-code
+    brew install visual-studio-code
 fi
 
 echo "Restoring VSCode settings..."
@@ -111,82 +101,54 @@ brew install --cask font-meslo-lg-for-powerline
 
 # Terminals
 if [ ! -d /Applications/iTerm.app ]; then
-    brew cask install iterm2;
+    brew install iterm2;
 fi
 
 if [ ! -d /Applications/Hyper.app ]; then
-    brew cask install hyper
+    brew install hyper
 fi
 
 # Browsers
 if [ ! -d /Applications/Google\ Chrome.app ]; then
-    brew cask install google-chrome
+    brew install google-chrome
 fi
 
 if [ $apps == 1 ]; then
     if [ ! -d /Applications/Firefox.app ]; then
-        brew cask install firefox
+        brew install firefox
     fi
 
     # Chat
-    if [ ! -d /Applications/HipChat.app ]; then
-        brew cask install hipchat
-    fi
     if [ ! -d /Applications/Slack.app ]; then
-        brew cask install slack
-    fi
-    if [ ! -d /Applications/Skype.app ]; then
-        brew cask install skype
+        brew install slack
     fi
 
     # Dev apps
     if [ ! -d /Applications/Sequel\ Pro.app ]; then
-        brew cask install sequel-pro
+        brew install sequel-pro
     fi
-    if [ ! -d /Applications/VirtualBox.app ]; then
-        brew cask install virtualbox
-    fi
+
     if [ ! -d /Applications/GitHub\ Desktop.app ]; then
-        brew cask install github-desktop
+        brew install github-desktop
     fi
     if [ ! -d /Applications/Paw.app ]; then
-        brew cask install paw
+        brew install paw
     fi
-    brew cask install ksdiff
-    if [ ! -d /Applications/Genymotion.app ]; then
-        brew cask install genymotion
-    fi
-    if [ ! -d /Applications/SourceTree.app ]; then
-        brew cask install sourcetree
-    fi
+    brew install ksdiff
+
     # Music
     if [ ! -d /Applications/Spotify.app ]; then
-        brew cask install spotify
+        brew install spotify
     fi
 
-    # Adobe Stuff
-    if [ ! -d /Applications/Adobe\ Photoshop\ CC\ 2015 ]; then
-        brew cask install adobe-photoshop-cc
-    fi
-    if [ ! -d /Applications/Adobe\ Illustrator\ CC\ 2015 ]; then
-        brew cask install adobe-illustrator-cc
-    fi
-
-    # Sketch
-    if [ ! -d /Applications/Sketch.app ]; then
-        brew cask install sketch
-    fi
-    if [ ! -d /Applications/InVisionSync.app ]; then
-        brew cask install invisionsync
-    fi
 
     # Nicer plugins for QuickLook.
-    brew cask install qlcolorcode
-    brew cask install qlstephen
-    brew cask install qlmarkdown
-    brew cask install quicklook-json
-    brew cask install webpquicklook
-    brew cask install qlimagesize
+    brew install qlcolorcode
+    brew install qlstephen
+    brew install qlmarkdown
+    brew install quicklook-json
+    brew install webpquicklook
+    brew install qlimagesize
 
     # System stuff
     brew install vim
@@ -199,45 +161,42 @@ if [ $apps == 1 ]; then
     brew install java
     brew install python
 
-    # Install Ruby
-    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-    \curl -sSL https://get.rvm.io | bash -s stable
-    rvm install ruby-head
 
     # Install App Store apps
 
-    # 1Password
-    mas install 443987910
-    # BetterSnapTool
-    mas install 417375580
-    # Boxy
-    mas install 1053031090
-    # Daisydisk - disk usage visualiser
-    mas install 411643860
-    # Harvest - Time tracking
-    mas install 506189836
-    # Integrity
-    mas install 513610341
-    # Kaleidoscope
-    mas install 587512244
+
+    # Flowstate
+    mas install 1060276201
+    # Things
+    mas install 904280696
+
     # Keynote
     mas install 409183694
-    # Name Mangler
-    mas install 603637384
-    # Numbers
-    mas install 409203825
-    # Pages
-    mas install 409201541
-    # Patterns
-    mas install 429449079
-    # Sip
-    mas install 507257563
-    # Soulver
-    mas install 413965349
-    # Transmit
-    mas install 403388562
+    # Paprika
+    mas install 1303222628
+
+    # Day One
+    mas install 1055511498
+
+    # Microsoft Word
+    mas install 462054704
+
+
+    # Logic Pro
+    mas install 634148309
+
+    # TablePlus
+    mas install 1362220669
+
+    # Sequel Ace
+    mas install 1518036000
+
     # Xcode
     mas install 497799835
+
+    # Slack
+    mas install 803453959
+
 
     ## Google Chrome extensions
     mkdir -p ~/Library/Application\ Support/Google/Chrome/External\ Extensions
@@ -246,25 +205,21 @@ if [ $apps == 1 ]; then
     }
     # 1Password
     install_chrome_extension 'aomjjhallfgjeglblehebfpbcfeobpgk'
-    # Capture for JIRA
-    install_chrome_extension 'mmmjimhmoodbiejkjgcecaoibmochpnj'
+
     # Browserstack
     install_chrome_extension 'nkihdmlheodkdfojglpcjjmioefjahjb'
     # Clockwork
     install_chrome_extension 'dmggabnehkmmfmdffgajcflpdjlnoemp'
-    # Harvest time tracker
-    install_chrome_extension 'fbpiglieekigmkeebmeohkelfpjjlaia'
+
     # Hubspot
     install_chrome_extension 'oiiaigjnkhngdbnoookogelabohpglmd'
-    # Vue.js devtools
-    install_chrome_extension 'nhdogjmejiglipccpnnnanhbledajbpd'
+
 fi
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "-------------------------------------"
-echo "Your Git key is ready to be pasted!"
 echo "Enjoy your new system!"
 echo "-------------------------------------"
 

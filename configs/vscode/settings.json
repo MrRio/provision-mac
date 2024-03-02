@@ -1,0 +1,41 @@
+{
+  "atlascode.jira.jqlList": [
+    {
+      "id": "2b1517b9-1036-4e12-9818-da9c108eb77d",
+      "enabled": true,
+      "name": "My myparallax Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "7590b208-b9e7-454e-8ba6-e95e2e736ece",
+      "monitor": true
+    }
+  ],
+  "editor.accessibilitySupport": "off",
+  "editor.inlineSuggest.enabled": true,
+  "editor.lineHeight": 2.5,
+  "files.associations": {
+    "*.webjs": "javascript"
+  },
+  "git.autofetch": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false,
+    "yaml": false
+  },
+  "redhat.telemetry.enabled": true,
+  "terminal.explorerKind": "external",
+  "terminal.integrated.env.osx": {
+    "FIG_NEW_SESSION": "1"
+  },
+  "workbench.colorTheme": "Base16 Eighties Dark",
+  "workbench.editor.enablePreview": false,
+  "yaml.schemas": {
+    "file:///Users/james/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "playwright.reuseBrowser": true,
+  "playwright.showTrace": false,
+  "window.zoomLevel": 1,
+  "editor.stickyScroll.enabled": true,
+  "typescript.tsserver.log": "verbose"
+}

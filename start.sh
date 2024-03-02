@@ -39,15 +39,24 @@ read -e -p "Press enter to continue"
 brew install mas
 mas signin $APP_STORE_EMAIL $APP_STORE_PASSWORD
 
-# Install PHP71 and MySQL
-brew tap homebrew/php
-brew install homebrew/php/php71 homebrew/php/php71-mcrypt mysql
+# Install nvm (Node Version Manager)
+echo "Installing nvm..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Load nvm and install latest node version
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+echo "Installing latest Node.js version..."
+nvm install node
+
+echo "Installing PHP..."
+brew install php mysql
 
 # Start MySQL on boot
 brew services start mysql
 
-# Install node
-brew install node
 
 # Yarn
 brew install yarn
@@ -67,103 +76,38 @@ mkdir -p ~/.bin
 
 export PATH="$HOME/.bin:$HOME/.composer/vendor/bin:$PATH"
 
-# Install valet and configure that
-composer global require laravel/valet
-composer global require "phpunit/phpunit=5.5.*"
-composer global require "squizlabs/php_codesniffer=*"
-composer global require friendsofphp/php-cs-fixer
 
-valet install
-
-# Add valet to ~/Code
-# Setup code directories
 mkdir ~/Code
 cd ~/Code
-valet park
-
-# Install Laravel installer
-composer global require "laravel/installer"
-composer create-project laravel/laravel example
-cd example
-valet secure
-valet open
 
 # Install Cask and GUI apps
 brew tap caskroom/cask
 
 # Editors
-if [ ! -d /Applications/Atom.app ]; then
-    brew cask install atom
-fi
+
 if [ ! -d /Applications/Sublime\ Text.app ]; then
     brew cask install sublime-text
 fi
-if [ ! -d /Applications/PhpStorm.app ]; then
-    brew cask install phpstorm
+if [ ! -d /Applications/Visual\ Studio\ Code.app ]; then
+    brew cask install visual-studio-code
 fi
 
-# Install atom deps, but only if they're not installed already
-installed=`apm ls`
-apmi() {
-    package=" $1@"
-    if ! grep -q $package <<< $installed; then
-      apm install $1
-    fi
-}
+echo "Restoring VSCode settings..."
+cp ./configs/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+echo "VSCode settings restored from ./configs/vscode/settings.json"
 
-apmi atom-ternjs
-apmi base16-tomorrow-night-eighties-syntax
-apmi count-word
-apmi docblockr
-apmi editorconfig
-apmi hyperclick
-apmi intentions
-apmi language-blade
-apmi language-powershell
-apmi language-protobuf
-apmi linter
-apmi linter-js-standard
-apmi linter-php
-apmi linter-phpcs
-apmi minimap
-apmi nucleus-dark-ui
-apmi php-cs-fixer
-apmi php-integrator-annotations
-apmi php-integrator-autocomplete-plus
-apmi php-integrator-base
-apmi php-integrator-call-tips
-apmi php-integrator-linter
-apmi php-integrator-navigation
-apmi php-integrator-refactoring
-apmi php-integrator-tooltips
-apmi project-manager
-apmi seti-ui
-apmi standard-formatter
-apmi standardjs-snippets
-apmi unity-dark-ui
-apmi unity-ui
+echo "Restoring VSCode extensions..."
+while read extension; do
+  code --install-extension $extension
+done < ./configs/vscode/extensions.txt
+echo "VSCode extensions restored."
 
-# TODO Potentially controversial and doesn't work in VM, also needs CSS hack
-# apm install no-title-bar
 
 # Fonts
-brew tap caskroom/fonts
-brew cask install font-meslo-lg-for-powerline
+brew tap homebrew/cask-fonts
+brew install --cask font-meslo-lg-for-powerline
 
-echo "{
-    title: \"Example\"
-    paths: [
-        \"/Users/`whoami`/Code/example\"
-    ]
-    devMode: true
-}" > project.cson
-atom .
-echo "To use PHP Integrator, go to Packages > Project Manager > Save Project and
-enable dev mode.
 
-Then go to Packages > PHP Integrator > Set Up Current Project
-" > setup.md
-atom setup.md
 
 # Terminals
 if [ ! -d /Applications/iTerm.app ]; then
@@ -331,3 +275,4 @@ open -b co.zeit.hyper
 cp ./configs/.zshrc ~/.zshrc
 
 sudo -k
+

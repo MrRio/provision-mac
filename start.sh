@@ -97,7 +97,8 @@ echo "VSCode extensions restored."
 brew tap homebrew/cask-fonts
 brew install --cask font-meslo-lg-for-powerline
 
-
+# Grammar and spellcheck
+brew install grammarly-desktop
 
 # Terminals
 if [ ! -d /Applications/iTerm.app ]; then

@@ -143,13 +143,8 @@ if [ $apps == 1 ]; then
     fi
 
 
-    # Nicer plugins for QuickLook.
-    brew install qlcolorcode
-    brew install qlstephen
+    # View Markdown files in Quicklook
     brew install qlmarkdown
-    brew install quicklook-json
-    brew install webpquicklook
-    brew install qlimagesize
 
     # System stuff
     brew install vim
@@ -182,7 +177,6 @@ if [ $apps == 1 ]; then
     # Microsoft Word
     mas install 462054704
 
-
     # Logic Pro
     mas install 634148309
 
@@ -198,6 +192,8 @@ if [ $apps == 1 ]; then
     # Slack
     mas install 803453959
 
+    # DaisyDisk
+    mas install 411643860
 
     ## Google Chrome extensions
     mkdir -p ~/Library/Application\ Support/Google/Chrome/External\ Extensions

@@ -157,6 +157,8 @@ if [ $apps == 1 ]; then
     brew install java
     brew install python
 
+    # GitHub Desktop
+    brew install --cask github
 
     # Install App Store apps
 

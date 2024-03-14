@@ -1,6 +1,5 @@
 #!/bin/bash
 # Install Xcode command line tools.
-sudo -K
 sudo echo "Welcome"
 
 read -p "Install optional apps (y/n)? " choice

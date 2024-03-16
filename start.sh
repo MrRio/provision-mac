@@ -99,6 +99,9 @@ brew install --cask font-meslo-lg-for-powerline
 # Grammar and spellcheck
 brew install grammarly-desktop
 
+# Database GUI
+brew install tableplus
+
 # Terminals
 if [ ! -d /Applications/iTerm.app ]; then
     brew install iterm2;

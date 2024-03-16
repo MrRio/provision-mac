@@ -41,7 +41,10 @@ echo "Installing latest Node.js version..."
 nvm install node
 
 echo "Installing PHP..."
-brew install php mysql
+brew install php MySQL
+
+echo "Installing Postgres..."
+brew install postgresql
 
 # Start MySQL on boot
 brew services start mysql
